@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="env.js"></script>
+        <title id="title"></title>
+        <link rel="stylesheet" href="./lib/jquery-ui.css">
+        <script src="./lib/jquery-1.12.4.js"></script>
+        <script src="./lib/jquery-ui.js"></script>
+        <link rel='stylesheet' type='text/css' href='css/main.css'/>
+        <script src="./js/inneall.js"></script>
+        <script src="./js/session.js"></script>
+        <script>
+            $( document ).ready(function() {
+                document.getElementById("popup_excel_b1").src = "./js/Excelindex.html?rscoid="+rscoid+"&q=1&B=T"
+                document.getElementById("popup_excel_b2").src = "./js/Excelindex.html?rscoid="+rscoid+"&q=2&B=T"
+                document.getElementById("popup_excel_b3").src = "./js/Excelindex.html?rscoid="+rscoid+"&q=3&B=T"
+                function sessionCheck() {
+                    var id = decodeURIComponent(document.cookie);
+                    id = id.split("=")[1];
+                    var oldId = sessionStorage.getItem("SID");
+                    var oldId1 = sessionStorage.getItem("SID1");
+                    if(id != oldId1) {
+                        sessionStorage.setItem("SID1", id);
+                        var x = JSON.parse(sessionStorage.getItem("S"));
+                        x += 1;
+                        sessionStorage.setItem("S", JSON.stringify(x));
+                    }
+                }
+                document.getElementById("titleName").innerHTML = name
+                sessionCheck();
+            })
+        </script>
+    </head>
+    <body>
+        <div id='root'>
+            <div class="acca-layout d-flex h-100 flex-column">
+                <div>
+                    <div class='d-flex h-100 flex-column container-fluid'>
+                        <div class="fixed-top main-top-header row">
+                            <div class="acca-header acca-header-left">
+                                <span class="paper-title" id="titleName"></span>
+                            </div>
+                            <div class="acca-header acca-header-right">
+                                <div id="timer" class="timer-container timer-container-custom"></div>
+                            </div>
+                        </div>
+                        <div class="bumpSecondTopNav fixed-top top-secondary-header row">
+                            <div class="acca-subheader acca-subheader-left topNav tool-container"></div>
+                            <div class="acca-subheader acca-subheader-right">
+                                <button class="acca-btn flag-for-review topNav inactive">
+                                <span class="hidden-xs">Flag for Review</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='dragme navigator_popup' >
+                        <div id='' class="showDialog dialogItem resourceDialogContainer custom-class-1">
+                            <div class="ui-dialog-container ">
+                                <div class="ui-dialog" >
+                                    <header class="ui-dialog-titlebar">
+                                        <div class="title">
+                                            <div class="no-wrap">Navigator - </div>
+                                        </div>
+                                        <div class="action-items">
+                                            <i class="icon icon-close"></i>
+                                        </div>
+                                    </header>
+                                    <div class="ui-dialog-content custom-overflow">
+                                        <div class="dialogContainer">
+                                            <div class="dialogContent">
+                                                <table class="navigationDialogContent table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Question #</th>
+                                                            <th>Status</th>
+                                                            <th>Flagged - Review</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="">
+                                                            <th class="link-hov grey-text" scope="row"><a onclick="navlink('./sectionA.html', null)" href="./sectionA.html"> Section A </a></th>
+                                                            <td id="check_A" class="red-text"></td>
+                                                            <td id="A" onclick="flag('A')" class="flag inactive"></td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th class="link-hov grey-text" scope="row"><a onclick="navlink('./question1.html', null)" href="./question1.html"> Question 1 </a></th>
+                                                            <td id="check_1" class="red-text">Unseen</td>
+                                                            <td id="1" onclick="flag('1')" class="flag inactive"></td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th class="link-hov grey-text" scope="row"><a onclick="navlink('./sectionB.html', null)" href="./sectionB.html"> Section B </a></th>
+                                                            <td id="check_B" class="red-text"></td>
+                                                            <td id="B" onclick="flag('B')" class="flag inactive"></td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th class="link-hov grey-text" scope="row"><a onclick="navlink('./question2.html', null)" href="./question2.html"> Question 2 </a></th>
+                                                            <td id="check_2" class="red-text">Unseen</td>
+                                                            <td id="2" onclick="flag('2')" class="flag inactive"></td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th class="link-hov grey-text" scope="row"><a onclick="navlink('./question3.html', null)" href="./question3.html"> Question 3 </a></th>
+                                                            <td id="check_3" class="red-text">Unseen</td>
+                                                            <td id="3" onclick="flag('3')" class="flag inactive"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-dialog-overlay"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="acca-row fixed-top bumpSecondTopNav row">
+                        <div class="acca-body col">
+                            <div id="exam-canvas-container" class="paperBody clearfix">
+                                <div class="pl-30">
+                                    <br>
+                                    <p><span class="text-color"><span class="fs-20"><span class="text-font"><strong>Section B </strong></span></span></span></p>
+                                    <p><span class="text-color"><span class="fs-16"><span class="text-font">This section of the exam contains <strong>two questions</strong>.</span></span></span></p>
+                                    <p><span class="text-color"><span class="fs-16"><span class="text-font">Each question is worth <strong>25 marks</strong> and is compulsory.</span></span></span></p>
+                                    <p><span class="text-color"><span class="fs-16"><span class="text-font">This exam section is worth<strong> 50 marks</strong> in total.</span></span></span></p>
+                                    <br><br>
+                                    <p><span class="text-color"><span class="fs-16"><strong><span class="text-font">Important:&nbsp; </span></strong></span></span></p>
+                                    <p><span class="text-color"><span class="fs-16"><span class="text-font">In your live exam, you should:</span></span></span></p>
+                                    <ul>
+                                        <li><span class="text-color"><span class="fs-16"><span class="text-font">Indicate which task each of your responses relate to so that this is clear for markers.</span></span></span></li>
+                                        <li><span class="text-color"><span class="fs-16"><span class="text-font">Show all notes/workings that you want the marker to see within your responses. Remember, any notes/workings made on the Scratch Pad or on your workings paper will not be marked.</span></span></span></li>
+                                    </ul>
+                                    <p class="ml-18">&nbsp;</p>
+                                    <p><span class="text-color"><span class="fs-16"><span class="text-font">Select<strong> Next </strong>to continue.&nbsp; </span></span></span></p>
+                                    <iframe class="VH" id="popup_excel_b1" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src=""></iframe>
+                                    <iframe class="VH" id="popup_excel_b2" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src=""></iframe>
+                                    <iframe class="VH" id="popup_excel_b3" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src=""></iframe>
+                                    <iframe class="VH" id="popup_word_b1" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+                                    <iframe class="VH" id="popup_word_b2" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+                                    <iframe class="VH" id="popup_word_b3" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+                                    <div class="acca-footer align-text-bottom fixed-bottom no-gutters row">
+                                        <div class="acca-footer-left col-4"><button class="acca-btn help"><span class="hidden-xs">Help</span></button></div>
+                                        <div class="acca-footer-right col-8"><a href="./question1.html"><button class="acca-btn previous">Previous</button></a><button id="navigator" class="acca-btn navigator">Navigator</button><a href="./question2.html"><button class="acca-btn next leftBorder">Next</button></<button></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

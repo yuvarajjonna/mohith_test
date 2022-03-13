@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="env.js"></script>
+        <title id="title"></title>
+        <link rel="stylesheet" href="./lib/jquery-ui.css">
+        <script src="./lib/jquery-1.12.4.js"></script>
+        <script src="./lib/jquery-ui.js"></script>
+        <link rel='stylesheet' type='text/css' href='css/main.css'/>
+        <script>
+            $( document ).ready(function() {
+                var id = decodeURIComponent(document.cookie);
+                id = id.split("=")[1]
+                sessionStorage.setItem("SID", id);
+                sessionStorage.setItem("SID1", "");
+                sessionStorage.setItem("S", "0");
+                sessionStorage.setItem("submissionCheck", "[]");
+                sessionStorage.setItem('WordQ1', 'Write your answer here');
+                sessionStorage.setItem('WordQ2', 'Write your answer here');
+                sessionStorage.setItem('WordQ3', 'Write your answer here');
+                sessionStorage.setItem('WordQ4', 'Write your answer here');
+            })
+            function checkIfSubmit() {
+                setTimeout(function() {
+                    if(JSON.parse(sessionStorage.getItem("submissionCheck"))[0] == 'report1'){
+                        window.location.href = "./sectionA.html"
+                    } else {
+                        checkIfSubmit();
+                    }
+                }, 1000);
+            }
+            function startButton() {
+                sessionStorage.setItem("s", 0);
+                sessionStorage.setItem("t", timer);
+                sessionStorage.setItem("c", 0);
+                var done = document.getElementById("popup_word").contentWindow.report("report1", rscoid);
+                console.log('donr', done)
+                checkIfSubmit();
+                console.log("check")
+            }
+        </script>
+        <script src="./js/inneall.js"></script>
+        <style>
+            iframe {
+                visibility: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id='indexRoot'>
+            <h3 class="subHeading">ACCA Strategic Professional</h3>
+            <h1 class="heading">Advanced Audit and Assurance (AAA-INT)</h1>
+            <h3 class="content">AAA Final Mock – June 2021
+            <br><br>This question paper is divided into two sections:
+            <br><br>Section A – one question worth 50 marks in total.
+            <br>Section B – Two questions, each worth 25 marks. 50 marks in total.
+            <br><br>All questions are compulsory.</h3>
+            <iframe id="popup_word" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+            <a class="startBtn" onclick="startButton()">START  ASSESSMENT<span class="arrow">&rarr;</span></a>
+        </div>
+    </body>
+</html>

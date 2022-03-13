@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="../lib/jquery-ui.css">
+        <script src="../lib/jquery-1.12.4.js"></script>
+        <script src="../lib/jquery-ui.js"></script>
+        <script src="../lib/rangy-core.min.js"></script>
+        <script src="../lib/rangy-classapplier.js"></script>
+        <script src="../lib/rangy-highlighter.js"></script>
+        <!-- <script src="./js/session.js"></script> -->
+    </head>
+    <body>
+        <div class="container WOrdsubmit">
+            <form id='noteform' method='post' action=''>
+                <textarea name='note' id="wordData" class="summernote" contenteditable>Write your answer here</textArea>
+            </form>
+        </div>
+        <script>
+            function submitWord(q,rscoid){
+                const wq = "Word" + q
+                console.log("q", q, "rscoid", rscoid, "wq", wq)
+                var frm = document.getElementById('noteform') || null;
+                if(sessionStorage.getItem(wq)) {
+                    var x = sessionStorage.getItem(wq);
+                    document.getElementById("wordData").innerHTML = x;
+                    frm.action = "https://elearningpat.com/admin/patservices/service.php?q="+ q +"&scoid=" + rscoid;
+                    $.ajax({
+                        url: frm.action,
+                        type: 'POST',
+                        data : $('form').serialize(),
+                        success: function(){
+                            console.log('form submitted.', q);
+                            if(sessionStorage.getItem("submissionCheck")) {
+                                var checkSubmission = JSON.parse(sessionStorage.getItem("submissionCheck"));
+                                checkSubmission.push(q)
+                                sessionStorage.setItem("submissionCheck", JSON.stringify(checkSubmission))
+                            } else {
+                                sessionStorage.setItem("submissionCheck", "[]");
+                                var checkSubmission = JSON.parse(sessionStorage.getItem("submissionCheck"));
+                                checkSubmission.push(q)
+                                sessionStorage.setItem("submissionCheck", JSON.stringify(checkSubmission))
+                            }
+                        },
+                        error: function (jqXhr, textStatus, errorMessage) {
+                            console.log("sd", q, rscoid)
+                            submitWord(q, rscoid)
+                        }
+                    });
+                }
+                // console.log("frm.data")
+                // frm.submit();
+            }
+
+            function submitBackupWord(q,rscoid){
+                const wq = "Word" + q
+                console.log("q", q, "rscoid", rscoid, "wq", wq)
+                var frm = document.getElementById('noteform') || null;
+                if(sessionStorage.getItem(wq)) {
+                    var x = sessionStorage.getItem(wq);
+                    document.getElementById("wordData").innerHTML = x;
+                    frm.action = "https://elearningpat.com/admin/patservices/service.php?q="+ q + '_Backup' +"&scoid=" + rscoid;
+                    $.ajax({
+                        url: frm.action,
+                        type: 'POST',
+                        data : $('form').serialize(),
+                        success: function(){
+                            console.log('form submitted.', q);
+                            // if(sessionStorage.getItem("submissionCheck")) {
+                            //     var checkSubmission = JSON.parse(sessionStorage.getItem("submissionCheck"));
+                            //     checkSubmission.push(q)
+                            //     sessionStorage.setItem("submissionCheck", JSON.stringify(checkSubmission))
+                            // } else {
+                            //     sessionStorage.setItem("submissionCheck", "[]");
+                            //     var checkSubmission = JSON.parse(sessionStorage.getItem("submissionCheck"));
+                            //     checkSubmission.push(q)
+                            //     sessionStorage.setItem("submissionCheck", JSON.stringify(checkSubmission))
+                            // }
+                        },
+                        error: function (jqXhr, textStatus, errorMessage) {
+                            console.log("sd", q, rscoid)
+                            submitBackupWord(q, rscoid)
+                        }
+                    });
+                }
+                // console.log("frm.data")
+                // frm.submit();
+            }
+
+            function report(q,rscoid){
+                document.getElementById('wordData').innerHTML = "Student has attempted the exam";
+                var frm = document.getElementById('noteform') || null;
+                frm.action = "https://elearningpat.com/admin/patservices/service.php?q="+ q +"&scoid=" + rscoid;
+                $.ajax({
+                    url: frm.action,
+                    type: 'POST',
+                    data : $('form').serialize(),
+                    success: function(){
+                        console.log('form submitted.', q);
+                        if(sessionStorage.getItem("submissionCheck")) {
+                            var checkSubmission = JSON.parse(sessionStorage.getItem("submissionCheck"));
+                            checkSubmission.push(q)
+                            sessionStorage.setItem("submissionCheck", JSON.stringify(checkSubmission))
+                        } else {
+                            sessionStorage.setItem("submissionCheck", "[]");
+                            var checkSubmission = JSON.parse(sessionStorage.getItem("submissionCheck"));
+                            checkSubmission.push(q)
+                            sessionStorage.setItem("submissionCheck", JSON.stringify(checkSubmission))
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        console.log("sd", q, rscoid)
+                        report(q, rscoid)
+                    }
+                });
+            }
+            function report2(q,rscoid, data){
+                document.getElementById('wordData').innerHTML = data;
+                var frm = document.getElementById('noteform') || null;
+                frm.action = "https://elearningpat.com/admin/patservices/service.php?q="+ q +"&scoid=" + rscoid;
+                $.ajax({
+                    url: frm.action,
+                    type: 'POST',
+                    data : $('form').serialize(),
+                    success: function(){
+                        console.log('form submitted.', q);
+                        if(sessionStorage.getItem("submissionCheck")) {
+                            var checkSubmission = JSON.parse(sessionStorage.getItem("submissionCheck"));
+                            checkSubmission.push(q)
+                            sessionStorage.setItem("submissionCheck", JSON.stringify(checkSubmission))
+                        } else {
+                            sessionStorage.setItem("submissionCheck", "[]");
+                            var checkSubmission = JSON.parse(sessionStorage.getItem("submissionCheck"));
+                            checkSubmission.push(q)
+                            sessionStorage.setItem("submissionCheck", JSON.stringify(checkSubmission))
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        console.log("sd", q, rscoid)
+                        report2(q, rscoid, data)
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

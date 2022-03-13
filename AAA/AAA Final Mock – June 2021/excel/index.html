@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="kendo.common-material.min.css" />
+    <link rel="stylesheet" href="kendo.material.min.css" />
+    <link rel="stylesheet" href="kendo.material.mobile.min.css" />
+ <script src="jquery.min.js"></script>
+   <script src="jszip.min.js"></script>
+    <script src="kendo.all.min.js"></script>
+    <script>
+    var scr = document.createElement('script');
+scr.onload = function() {
+  display("Loaded: " + typeof ko);
+};
+scr.onerror = function() {
+  display("Error");
+};
+scr.src = "knockout-3.2.0.js";
+document.querySelector("script").parentNode.appendChild(scr);
+
+function display(msg) {
+  $("<p>").html(String(msg)).appendTo(document.body);
+}
+</script>
+</head>
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+}
+.k-spreadsheet .k-spreadsheet-cell-editor, .k-spreadsheet .k-spreadsheet-formula-input {
+    font-size: 14px;
+}
+</style>
+<script>
+$( document ).ready(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const rscoid = urlParams.get('rscoid');
+    const q = urlParams.get('q');
+	$('#spreadsheet').height($(window).height());
+	loadSpreadSheet(rscoid,q);
+
+	$( window ).resize(function() {
+        $('#spreadsheet').height($(window).height());
+    });
+    $("#spreadsheet").click(function(){
+        var id = "#check_"+q
+        console.log("hello", q, id)
+        // if(q == '1a') {
+        //     var id = "#check_31"
+        // } else if(q == '1b') {
+        //     var id = "#check_32"
+        // } else {
+        //     var id = "#check_34"
+        // }
+        console.log("id", id)
+        var el = $(id, window.parent.document);
+        console.log("el", el[0])
+        var getAnswerData = JSON.parse(sessionStorage.getItem("AnswerCheck"));
+        if(el[0].innerHTML == "Unseen" || el[0].innerHTML == "Not Attempted") {
+            getAnswerData.push(id);
+            el[0].innerHTML = "Attempted";
+            el[0].style.color = "#595959";
+            sessionStorage.setItem("AnswerCheck", JSON.stringify(getAnswerData));
+        }
+        // return false; // avoid parents divs if you have nested divs
+    });
+});
+
+function loadSpreadSheet(rscoid,q){
+    $('#loadinggif').hide();
+    $(function() {
+        $("#spreadsheet").kendoSpreadsheet({
+			excel: {
+                proxyURL: "https://elearningpat.com/admin/patservices/service.php?q=Q"+ q +"&scoid=" + rscoid,
+				forceProxy: true,
+				fileName: "ExcelFromScorm.xlsx"
+            },
+            pdf: {
+                proxyURL: "https://elearningpat.com/admin/patservices/service.php?q=Q"+ q +"&scoid=" + rscoid,
+				forceProxy: true
+            },
+            defaultCellStyle: {
+                wrap: false,
+                fontSize: '14'
+            },
+            rowHeight: 23
+        });
+        var name = "spreadsheet" + q
+        if(!sessionStorage.getItem(name)){
+            sessionStorage.setItem(name, "[]");
+        } else {
+            var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+            var sheet_data = JSON.parse(sessionStorage.getItem(name));
+            spreadsheet.fromJSON({sheets: sheet_data.sheets});
+        }
+    });
+}
+
+function setSpreadSheetData(q, rscoid){
+    var name1 = "spreadsheet" + q;
+    var spreadsheet = $("#spreadsheet").data("kendoSpreadsheet");
+    sessionStorage.setItem(name1, JSON.stringify(spreadsheet.toJSON()));
+}
+</script>
+<body>
+    <div id="example">
+        <div id="spreadsheet" style="width: 100%;max-height:100%!important">
+            <img id='loadinggif' src='images/loading.gif'/>
+        </div>
+    </div>
+</body>
+</html>

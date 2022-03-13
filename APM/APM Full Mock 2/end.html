@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="env.js"></script>
+        <title id="title"></title>
+        <link rel="stylesheet" href="./lib/jquery-ui.css">
+        <script src="./lib/jquery-1.12.4.js"></script>
+        <script src="./lib/jquery-ui.js"></script>
+        <script src="./lib/rangy-core.min.js"></script>
+        <script src="./lib/rangy-classapplier.js"></script>
+        <script src="./lib/rangy-highlighter.js"></script>
+        <script src="./js/session.js"></script>
+        <link rel='stylesheet' type='text/css' href='css/main.css'/>
+        <script>
+            function sessionCheck() {
+                var id = decodeURIComponent(document.cookie);
+                id = id.split("=")[1];
+                var oldId = sessionStorage.getItem("SID");
+                var oldId1 = sessionStorage.getItem("SID1");
+                if(id != oldId1) {
+                    sessionStorage.setItem("SID1", id);
+                    var x = JSON.parse(sessionStorage.getItem("S"));
+                    x += 1;
+                    sessionStorage.setItem("S", JSON.stringify(x));
+                }
+            }
+            $( document ).ready(function() {
+                sessionCheck();
+                document.getElementById("titleName").innerHTML = name
+                document.getElementById("popup_excel_b1").src = "./js/Excelindex.html?rscoid="+rscoid+"&q=1&B=T"
+                document.getElementById("popup_excel_b2").src = "./js/Excelindex.html?rscoid="+rscoid+"&q=2&B=T"
+                document.getElementById("popup_excel_b3").src = "./js/Excelindex.html?rscoid="+rscoid+"&q=3&B=T"
+            })
+            function onExit() {
+                sessionCheck();
+                var oldId2 = JSON.parse(sessionStorage.getItem("S"));
+                if(oldId2%2 != 0) {
+                    if (confirm("Are you sure you wish to exit the exam?")) {
+                        window.location.href = "./exit.html";
+                    } else {
+                        console.log("cancel");
+                    }
+                } else {
+                    alert("There was an error saving your submission. Please ensure you are signed in correctly to Moodle");
+                }
+            }
+        </script>
+        <script src="./js/inneall.js"></script>
+    </head>
+    <body>
+        <div id='root'>
+            <div class="acca-layout d-flex h-100 flex-column">
+                <div>
+                    <div class='d-flex h-100 flex-column container-fluid'>
+                        <div class="fixed-top main-top-header row">
+                            <div class="acca-header acca-header-left"><span class="paper-title" id="titleName"></span></div>
+                            <div class="acca-header acca-header-right">
+                                <div id="timer" class="timer-container timer-container-custom"></div>
+                            </div>
+                        </div>
+                        <div class="bumpSecondTopNav fixed-top top-secondary-header row">
+                            <div class="acca-subheader acca-subheader-left topNav tool-container">
+                                <button class="acca-btn reviewHelp topNav"><span class="hidden-xs">Item Review Screen Explained</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="bumpSecondTopNav top-secondary-header row endhead">
+                        <div class="acca-subheader acca-subheader-left topNav tool-container">
+                            <span class="acca-btn">Exam Section - Review answers against solution material</span>
+                        </div>
+                    </div>
+                    <div class='endPageReview'>
+                        <table class="navigationDialogContent table">
+                            <tbody>
+                                <tr class="">
+                                    <th class="link-hov grey-text" scope="row"><a onclick="navlink('./sectionA.html', null)"> Section A </a></th>
+                                    <td id="check_A" class="red-text"></td>
+                                </tr>
+                                <tr class="">
+                                    <th class="link-hov grey-text" scope="row"><a onclick="navlink('./question1.html', null)"> Question 1 </a></th>
+                                    <td id="check_1" class="red-text">Unseen</td>
+                                </tr>
+                                <tr class="">
+                                    <th class="link-hov grey-text" scope="row"><a onclick="navlink('./sectionB.html', null)"> Section B </a></th>
+                                    <td id="check_B" class="red-text"></td>
+                                </tr>
+                                <tr class="">
+                                    <th class="link-hov grey-text" scope="row"><a onclick="navlink('./question2.html', null)"> Question 2 </a></th>
+                                    <td id="check_2" class="red-text">Unseen</td>
+                                </tr>
+                                <tr class="">
+                                    <th class="link-hov grey-text" scope="row"><a onclick="navlink('./question3.html', null)"> Question 3 </a></th>
+                                    <td id="check_3" class="red-text">Unseen</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <iframe class="VH" id="popup_excel_b1" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src=""></iframe>
+                        <iframe class="VH" id="popup_excel_b2" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src=""></iframe>
+                        <iframe class="VH" id="popup_excel_b3" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src=""></iframe>
+                        <iframe class="VH" id="popup_word_b1" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+                        <iframe class="VH" id="popup_word_b2" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+                        <iframe class="VH" id="popup_word_b3" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+                    </div>
+                    <div class="acca-footer align-text-bottom fixed-bottom no-gutters row">
+                        <div class="acca-footer-left col-4"><button class="acca-btn endTheTest" onclick="onExit()"><span>End Exam</span></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

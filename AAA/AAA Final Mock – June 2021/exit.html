@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="env.js"></script>
+        <title id="title"></title>
+        <link rel="stylesheet" href="./lib/jquery-ui.css">
+        <script src="./lib/jquery-1.12.4.js"></script>
+        <script src="./lib/jquery-ui.js"></script>
+        <script>
+            function onExit() {
+                localStorage.clear();
+                window.top.close();
+            };
+            $( document ).ready(function() {
+                document.getElementById("popup_excel").src = "./js/Excelindex.html?rscoid="+rscoid+"&q=1"
+                document.getElementById("popup_excel2").src = "./js/Excelindex.html?rscoid="+rscoid+"&q=2"
+                document.getElementById("popup_excel3").src = "./js/Excelindex.html?rscoid="+rscoid+"&q=3"
+            })
+        </script>
+        <style>
+        iframe {
+            visibility: hidden;
+        }
+        </style>
+        <link rel='stylesheet' type='text/css' href='css/main.css'/>
+    </head>
+    <body>
+        <div id='root'>
+            <a href="#" id="dummy"></a>
+            <img class="endImageSmall" src="./images/tud/logosmall.png" alt="img">
+            <img class="Image" src="./images/tud/final.jpg" alt="img">
+            <h1 class="endHeading">Advanced Audit and Assurance (AAA)</h1>
+            <h3 class="endCompleteBlock"><p>Complete</p></h3>
+            <h3 id="Thanks" class="endContent">Thank You</h3>
+            <h4 id="subTest" class="endSubContent">submission in process.....</h4>
+            <iframe id="popup_excel" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src=""></iframe>
+            <iframe id="popup_excel2" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src=""></iframe>
+            <iframe id="popup_excel3" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src=""></iframe>
+            <iframe id="popup_word" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+            <iframe id="popup_word1" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+            <iframe id="popup_word2" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+            <iframe id="popup_word_report" sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin" src="./js/index.html"></iframe>
+            <a class="endBtn" id="endBtn" onclick="onExit()">Exit</a>
+        </div>
+        <script>
+            const beforeUnloadListener = (event) => {
+                event.preventDefault();
+                return event.returnValue = "Are you sure you want to exit?";
+            };
+            window.addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+            setTimeout(function() {
+                document.getElementById("dummy").click();
+            }, 1000);
+            function wait() {
+                setTimeout(function() {
+                    if(JSON.parse(sessionStorage.getItem("submissionCheck")).length == 5) {
+                        setTimeout(function() {
+                            document.getElementById("subTest").innerHTML = "Successfully Submitted";
+                            document.getElementById("endBtn").style.display = "block";
+                            document.getElementById("Thanks").style.display = "block";
+                        }, 100000);
+                    } else {
+                        wait();
+                    }
+                }, 120000);
+            }
+            setTimeout(function() {
+                if(sessionStorage.getItem('WordQ1')){
+                    if(sessionStorage.getItem('WordQ1') != 'Write your answer here'){
+                        var reportWordQ1 = 'word Q1 attempted ------ answer length: ' + sessionStorage.getItem('WordQ1').length;
+                    } else {
+                        var reportWordQ1 = 'word Q1 not attempted'
+                    }
+                    console.log("check report", reportWordQ1);
+                }
+                if(sessionStorage.getItem('WordQ2')){
+                    if(sessionStorage.getItem('WordQ2') != 'Write your answer here'){
+                        var reportWordQ2 = 'word Q2 attempted ------ answer length: ' + sessionStorage.getItem('WordQ2').length;
+                    } else {
+                        var reportWordQ2 = 'word Q2 not attempted'
+                    }
+                    console.log("check report", reportWordQ2);
+                }
+                if(sessionStorage.getItem('WordQ3')){
+                    if(sessionStorage.getItem('WordQ3') != 'Write your answer here'){
+                        var reportWordQ3 = 'word Q3 attempted ------ answer length: ' + sessionStorage.getItem('WordQ3').length;
+                    } else {
+                        var reportWordQ3 = 'word Q3 not attempted'
+                    }
+                    console.log("check report", reportWordQ3);
+                }
+                if(sessionStorage.getItem('spreadsheet1')){
+                    if(sessionStorage.getItem('spreadsheet1') != '[]' && JSON.parse(sessionStorage.getItem('spreadsheet1')).sheets[0].rows.length != 0){
+                        var reportExcelQ1 = 'Excel Q1 attempted'
+                    } else {
+                        var reportExcelQ1 = 'Excel Q1 not attempted'
+                    }
+                    console.log("check report", reportExcelQ1);
+                }
+                if(sessionStorage.getItem('spreadsheet2')){
+                    if(sessionStorage.getItem('spreadsheet2') != '[]' && JSON.parse(sessionStorage.getItem('spreadsheet2')).sheets[0].rows.length != 0){
+                        var reportExcelQ2 = 'Excel Q2 attempted'
+                    } else {
+                        var reportExcelQ2 = 'Excel Q2 not attempted'
+                    }
+                    console.log("check report", reportExcelQ2);
+                }
+                if(sessionStorage.getItem('spreadsheet3')){
+                    if(sessionStorage.getItem('spreadsheet3') != '[]' && JSON.parse(sessionStorage.getItem('spreadsheet3')).sheets[0].rows.length != 0){
+                        var reportExcelQ3 = 'Excel Q3 attempted'
+                    } else {
+                        var reportExcelQ3 = 'Excel Q3 not attempted'
+                    }
+                    console.log("check report", reportExcelQ3);
+                }
+                var report2 = '<p>' + reportWordQ1 + '</p>' + '<p>' + reportWordQ2 + '</p>' + '<p>' + reportWordQ3 + '</p>' + '<p>' + reportExcelQ1 + '</p>' + '<p>' + reportExcelQ2 + '</p>' + '<p>' + reportExcelQ3 + '</p>';
+                console.log('check final', report2)
+                document.getElementById("popup_word_report").contentWindow.report2("report2", rscoid, report2);
+                // sessionStorage.setItem("report2", report2);
+            }, 3000);
+            setTimeout(function() {
+                document.getElementById("popup_excel").contentWindow.submitSpreadSheet();
+                document.getElementById("popup_excel2").contentWindow.submitSpreadSheet();
+                document.getElementById("popup_excel3").contentWindow.submitSpreadSheet();
+            }, 5000);
+            setTimeout(function() {
+                document.getElementById("popup_word").contentWindow.submitWord("Q1", rscoid);
+                document.getElementById("popup_word1").contentWindow.submitWord("Q2", rscoid);
+                document.getElementById("popup_word2").contentWindow.submitWord("Q3", rscoid);
+            }, 7000);
+            setTimeout(function() {
+                if(JSON.parse(sessionStorage.getItem("submissionCheck")).length == 5) {
+                    window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+                    document.getElementById("subTest").innerHTML = "Successfully Submitted";
+                    document.getElementById("endBtn").style.display = "block";
+                    document.getElementById("Thanks").style.display = "block";
+                } else {
+                    wait();
+                }
+            }, 300000);
+        </script>
+    </body>
+</html>

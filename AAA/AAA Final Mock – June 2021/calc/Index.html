@@ -1,0 +1,711 @@
+<html>
+<head>
+<style>
+/* RESET */
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2.6rem;
+  margin-bottom: 15px;
+}
+h3 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+a {
+  text-decoration: underline;
+  color: inherit;
+}
+p {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+/* Added settings */
+
+.wrapper {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1000px;
+}
+body {
+  font-family: 'roboto slab';
+  font-size: 1.5rem;
+ 
+}
+
+/* footer */
+
+footer {
+  background-color: #000;
+  padding: 20px 0;
+  text-align: center;
+  color: #fff;
+  font-size: 1.2rem;
+  font-family: 'roboto slab';
+}
+.container {
+  min-height: calc(100vh - 59px);
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+img, embed, object, video {
+  max-width: 100%;
+}
+
+/*  main Styles*/
+
+
+
+.display {
+  width: 100%;
+  height: 135px;
+  border-bottom: 3px solid #ddd;
+  text-align: right;
+  font-size: 2.2rem;
+  padding-top: calc(135px - 5rem);
+  padding-right: 2px;
+  color: green;
+  overflow: hidden;
+  background-color: #fff;
+}
+.expression {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 70px;
+  font-size: 12px;
+}
+
+.buttons {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+}
+
+.buttons > * {
+  display: block;
+  width: 6.5rem;
+  height: 4.5rem;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  cursor: pointer;
+  float: left;
+  transition: 1s ease;
+  position: relative;
+}
+.waveButton {
+  content: "";
+  top: 0%;
+  left: 20%;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  border-radius: 50%;
+  width: 4.5rem;
+  height: 4.5rem;
+  transform: scale(0);
+  opacity: 0;
+  z-index: 1;
+}
+
+.phone {
+  background-color: #000;
+  height: 550px;
+  width: 280px;
+  border-bottom-left-radius: 140px 25px;
+  border-bottom-right-radius: 140px 25px;
+  margin: 0 auto;
+}
+
+.fcamera {
+  position: absolute;
+  background-color: #212122;
+  height: 10px;
+  width: 10px;
+  border-radius: 10px;
+  margin-top: 25px;
+  margin-left: 35px;
+}
+
+.clens {
+  position: absolute;
+  background-color: #0F0F0F;
+  height: 5px;
+  width: 5px;
+  border-radius: 5px;
+  margin-top: 27px;
+  margin-left: 38px;
+}
+
+
+.screen {
+  background-color: #212122;
+  position: absolute;
+  height: 450px;
+  width: 260px;
+  margin-left: 10px;
+  margin-top: 50px;
+}
+
+.ripple {
+  animation: ripple 500ms forwards;
+}
+
+.clear {
+  width: calc(6.5rem * 2);
+}
+.del, .sign {
+  width: 6.5rem;
+}
+.sci-ops, .reset {
+  /*	background-color:  #1c2524;*/
+  background-color: #08130b;
+}
+.basic-ops {
+  background-color: #fc5a2c;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+  }
+  20% {
+    transform: scale(2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+
+</style>
+
+<head>
+<body>
+
+
+<div class="phone">
+ 
+  <div class="screen">
+    <div class="display">0</div>
+    <div class="expression"></div>
+    <div class="buttons clearfix">
+      <div class="clear reset" onclick="clearScreen.call(this)">CE
+        <div class="waveButton"></div>
+      </div>
+      <div class="del reset" data-number="8" onclick="deleteANumber.call(this)">C
+        <div class="waveButton"></div>
+      </div>
+      <div class="sign reset" onclick="alternateSign.call(this)">-M
+        <div class="waveButton"></div>
+      </div>
+
+      <div class="sci-ops " onclick="sin.call(this)">sin
+        <div class="waveButton"></div>
+      </div>
+      <div class="sci-ops " onclick="cos.call(this)">cos
+        <div class="waveButton"></div>
+      </div>
+      <div class="sci-ops " onclick="tan.call(this)">tan
+        <div class="waveButton"></div>
+      </div>
+      <div class="sci-ops " onclick="exp.call(this)">exp
+        <div class="waveButton"></div>
+      </div>
+      <div class="sci-ops " onclick="log.call(this)">log
+        <div class="waveButton"></div>
+      </div>
+      <div class="sci-ops " onclick="log2.call(this)">log<sub>2</sub>
+        <div class="waveButton"></div>
+      </div>
+      <div class="sci-ops " onclick="pow.call(this)">x<sup>2</sup>
+        <div class="waveButton"></div>
+      </div>
+      <div class="sci-ops " onclick="sqrt.call(this)">&#8730;x
+        <div class="waveButton"></div>
+      </div>
+
+      <div class="number " data-number="55">7
+        <div class="waveButton"></div>
+      </div>
+      <div class="number " data-number="56">8
+        <div class="waveButton"></div>
+      </div>
+      <div class="number " data-number="57">9
+        <div class="waveButton"></div>
+      </div>
+      <div class="basic-ops " data-number="107">+
+        <div class="waveButton"></div>
+      </div>
+
+      <div class="number " data-number="52">4
+        <div class="waveButton"></div>
+      </div>
+      <div class="number " data-number="53">5
+        <div class="waveButton"></div>
+      </div>
+      <div class="number " data-number="54">6
+        <div class="waveButton"></div>
+      </div>
+      <div class="basic-ops " data-number="109">-
+        <div class="waveButton"></div>
+      </div>
+
+      <div class="number " data-number="49">1
+        <div class="waveButton"></div>
+      </div>
+      <div class="number " data-number="50">2
+        <div class="waveButton"></div>
+      </div>
+      <div class="number  " data-number="51">3
+        <div class="waveButton"></div>
+      </div>
+      <div class="basic-ops " data-number="106">*
+        <div class="waveButton"></div>
+      </div>
+
+      <div class="number " data-number="48">0
+        <div class="waveButton"></div>
+      </div>
+      <div class="number " data-number="110">.
+        <div class="waveButton"></div>
+      </div>
+      <div class="equals " data-number="13" onclick="equals.call(this)">&#61;
+        <div class="waveButton"></div>
+      </div>
+      <div class="basic-ops " data-number="111">/
+        <div class="waveButton"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+const numbers = document.querySelectorAll(".number");
+const basicOps = document.querySelectorAll(".basic-ops");
+const screen = document.querySelector(".display");
+const expression = document.querySelector(".expression");
+
+let total = 0;
+let lastNumber = 0;
+let op = "";
+let isNewEntry = true;
+let isNewExpression = false;
+
+numbers.forEach(number =>
+  number.addEventListener("click", function() {
+    addTextToScreen(this);
+  })
+);
+
+function addTextToScreen(numberElement) {
+  lastNumber = "";
+  if (expression.textContent[expression.textContent.length - 1] == ")") {
+    expression.textContent = "";
+  }
+  if (isNewExpression) {
+    expression.textContent = "";
+    isNewExpression = false;
+  }
+
+  if (numberElement.textContent == ".") {
+    if (!screen.textContent.includes(".")) {
+      screen.textContent += numberElement.textContent.trim();
+      expression.textContent += numberElement.textContent.trim();
+      isNewEntry = false;
+    }
+  } else {
+    if (isNewEntry || screen.textContent == "0") {
+      screen.textContent = "";
+    }
+    screen.textContent += numberElement.textContent.trim();
+    expression.textContent += numberElement.textContent.trim();
+    isNewEntry = false;
+  }
+  lastNumber = screen.textContent.trim();
+  //produce a wave effect
+  numberElement.querySelector(".waveButton").classList.add("ripple");
+}
+
+//loop to the basic operators in the calculator [*+/-] and haandle their events
+basicOps.forEach(op =>
+  op.addEventListener("click", function() {
+    storeLastNumber(this);
+  })
+);
+//run when an operator is pressed 3 +
+function storeLastNumber(operatorElement) {
+  if (!isNewEntry) {
+    total = parseFloat(lastNumber);
+    lastNumber = "";
+  }
+
+  screen.textContent = "";
+  op = operatorElement.textContent.trim();
+  expression.textContent += op;
+  isNewExpression = false;
+  //produce a wave effect
+  operatorElement.querySelector(".waveButton").classList.add("ripple");
+}
+
+function performBasicOp() {
+  if (op == "+") {
+    total = add(total, parseFloat(lastNumber));
+  } else if (op == "-") {
+    total = sub(total, parseFloat(lastNumber));
+  } else if (op == "*") {
+    total = mult(total, parseFloat(lastNumber));
+  } else if (op == "/") {
+    total = divide(total, parseFloat(lastNumber));
+  } else {
+    total = parseFloat(lastNumber);
+  }
+
+  return total;
+}
+//=
+function equals(equalElement) {
+  equalElement = equalElement || this;
+  screen.textContent = "";
+
+  let value = performBasicOp();
+
+  if (Number.isNaN(value)) {
+    screen.textContent = "You broke it!";
+  } else {
+    screen.textContent = value;
+    isNewEntry = true;
+    isNewExpression = true;
+  }
+
+  //produce a wave effect
+  equalElement.querySelector(".waveButton").classList.add("ripple");
+}
+//-M
+function alternateSign() {
+  if (screen.textContent != 0) {
+    screen.textContent = screen.textContent.substring(0, 1) != "-"
+      ? "-" + screen.textContent
+      : screen.textContent.slice(1, screen.textContent.length);
+    total = parseFloat(screen.textContent);
+    expression.textContent = screen.textContent;
+    isNewEntry = true;
+    //produce a wave effect
+    this.querySelector(".waveButton").classList.add("ripple");
+  }
+}
+
+// basic operations
+function add(number1, number2) {
+  return number1 + number2;
+}
+function sub(number1, number2) {
+  return number1 - number2;
+}
+function mult(number1, number2) {
+  return number1 * number2;
+}
+function divide(number1, number2) {
+  return number2 == 0 ? 0 : number1 / number2;
+}
+
+//Scientific operations
+function cos() {
+  expression.textContent = `cos(${screen.textContent})`;
+  screen.textContent = Math.sin(parseFloat(screen.textContent) * Math.PI / 180);
+  total = parseFloat(screen.textContent);
+  isNewEntry = true;
+
+  //produce a wave effect
+  this.querySelector(".waveButton").classList.add("ripple");
+}
+
+function sin() {
+  expression.textContent = `sin(${screen.textContent})`;
+  screen.textContent = Math.sin(parseFloat(screen.textContent) * Math.PI / 180);
+  total = parseFloat(screen.textContent);
+  isNewEntry = true;
+  //produce a wave effect
+  this.querySelector(".waveButton").classList.add("ripple");
+}
+
+function tan() {
+  expression.textContent = `tan(${screen.textContent})`;
+
+  let value = Math.tan(parseFloat(screen.textContent) * Math.PI / 180);
+  screen.textContent;
+  total = parseFloat(screen.textContent);
+  isNewEntry = true;
+  //produce a wave effect
+  this.querySelector(".waveButton").classList.add("ripple");
+}
+
+function sqrt() {
+  expression.textContent = `sqrt(${screen.textContent})`;
+  screen.textContent = Math.sqrt(parseFloat(screen.textContent));
+  total = parseFloat(screen.textContent);
+  isNewEntry = true;
+  //produce a wave effect
+  this.querySelector(".waveButton").classList.add("ripple");
+}
+
+function log() {
+  expression.textContent = `log(${screen.textContent})`;
+  screen.textContent = screen.textContent == 0
+    ? 0
+    : Math.log10(parseFloat(screen.textContent));
+  checkForPotentialError(screen.textContent);
+  //produce a wave effect
+  this.querySelector(".waveButton").classList.add("ripple");
+}
+
+function log2() {
+  expression.textContent = `log2(${screen.textContent})`;
+  screen.textContent = screen.textContent == 0
+    ? 0
+    : Math.log2(parseFloat(screen.textContent));
+  checkForPotentialError(screen.textContent);
+
+  //produce a wave effect
+  this.querySelector(".waveButton").classList.add("ripple");
+}
+
+function checkForPotentialError(value) {
+  if (Number.isNaN(parseFloat(value))) {
+    screen.textContent = "You broke it!";
+    total = 0;
+    expression.textContent = "";
+  } else {
+    screen.textContent = value;
+    total = parseFloat(screen.textContent);
+    isNewEntry = true;
+  }
+}
+
+function pow() {
+  expression.textContent = `(${screen.textContent.trim()})^2`;
+  screen.textContent = Math.pow(parseFloat(screen.textContent), 2);
+  total = parseFloat(screen.textContent);
+  isNewEntry = true;
+  //produce a wave effect
+  this.querySelector(".waveButton").classList.add("ripple");
+}
+
+function exp() {
+  expression.textContent = `e^(${screen.textContent})`;
+  screen.textContent = Math.exp(parseFloat(screen.textContent), 2);
+  total = parseFloat(screen.textContent);
+  isNewEntry = true;
+  //produce a wave effect
+  this.querySelector(".waveButton").classList.add("ripple");
+}
+
+//keyboard events
+window.addEventListener("keydown", function(e) {
+  //adds a number
+  if ((e.which >= 48 && e.which <= 57) || e.which == 110) {
+    const number = document.querySelector(`div[data-number="${e.which}"]`);
+    addTextToScreen(number);
+  } else if (
+    e.which == 106 ||
+    e.which == 107 ||
+    e.which == 109 ||
+    e.which == 111
+  ) {
+    //performs basic operations +-*/
+    const operator = document.querySelector(`div[data-number="${e.which}"]`);
+    storeLastNumber(operator);
+  } else if (e.which == 13) {
+    //performs equal to operation on enter
+    const enter = document.querySelector(`div[data-number="${e.which}"]`);
+    equals(enter);
+  } else if (e.which == 8) {
+    //delete on backspace
+    const del = document.querySelector(`div[data-number="${e.which}"]`);
+    deleteANumber(del);
+  }
+});
+//clear screen
+function clearScreen() {
+  total = 0;
+  lastNumber = 0;
+  op = "";
+  isNewEntry = true;
+  screen.textContent = "0";
+  expression.textContent = "";
+}
+//delete the last digit on the screen
+function deleteANumber(deleteElement) {
+  deleteElement = deleteElement || this;
+  screen.textContent = screen.textContent.length != 1
+    ? screen.textContent.slice(0, screen.textContent.length - 1)
+    : "0";
+  total = parseFloat(screen.textContent);
+  isNewEntry = true;
+
+  deleteElement.querySelector(".waveButton").classList.add("ripple");
+}
+
+//some boring css ripple animation
+const waveButtons = document.querySelectorAll(".waveButton");
+waveButtons.forEach(waveButton =>
+  waveButton.addEventListener("animationend", function() {
+    this.classList.remove("ripple");
+  })
+);
+
+//test if the expression on the screen is an operator
+function islastCharacterABasicOperator(text) {
+  return (
+    text[text.length - 1] == "*" ||
+    text[text.length - 1] == "-" ||
+    text[text.length - 1] == "/" ||
+    text[text.length - 1] == "+"
+  );
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+</script>
+
+</div>
+</body>
+</html>

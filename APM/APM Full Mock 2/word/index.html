@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Summernote - Bootstrap 4</title>
+        <!-- include jquery -->
+        <script src="./dist/jquery.js"></script>
+        <!-- include libs stylesheets -->
+        <link rel="stylesheet" href="./dist/bootstrap.css" />
+        <script src="./dist/popper.js"></script>
+        <script src="./dist/bootstrap.js"></script>
+        <!-- include summernote -->
+        <link rel="stylesheet" href="./dist/summernote-bs4.css">
+        <script type="text/javascript" src="./dist/summernote-bs4.js"></script>
+        <link rel="stylesheet" href="examples/example.css">
+        <style>
+            body{
+                margin:0;
+            }
+            p{
+                font-size: 14px !important;
+            }
+            span {
+                color: black !important;
+            }
+            .note-editor.note-frame .note-editing-area .note-editable {
+                height:100% !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" style='padding:0;width:100%;max-width:100%'>
+            <form id='noteform' method='post' action=''>
+                <textarea name='note' id="wordData" class="summernote" contenteditable>Write your answer here</textArea>
+            </form>
+        </div>
+        <script>
+          var $ = jQuery.noConflict();
+            $(document).ready(function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const rscoid = urlParams.get('rscoid');
+                const q = urlParams.get('q');
+                const wq = "WordQ" + q
+                console.log("q", q, "rscoid", rscoid, "wq", wq)
+                var frm = document.getElementById('noteform') || null;
+                console.log("frm", frm, String(frm))
+                sessionStorage.setItem("wordFrm", JSON.stringify(frm));
+                if(sessionStorage.getItem(wq)) {
+                    var x = sessionStorage.getItem(wq);
+                    document.getElementById("wordData").innerHTML = x;
+                }
+                $( window ).resize(function() {
+                    //$('#spreadsheet').height($(window).height());
+                    var height  = $(window).height() - 60;
+                    $('.note-editing-area').height(height);
+                });
+                var height  = $(window).height() - 60;
+                $('.summernote').summernote({
+                    height: height,
+                    tabsize: 5,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                    ],
+                });
+                $('[contenteditable]').on('paste', function(e) {
+                    e.preventDefault();
+                    var text = '';
+                    if (e.clipboardData || e.originalEvent.clipboardData) {
+                        text = (e.originalEvent || e).clipboardData.getData('text/plain');
+                    } else if (window.clipboardData) {
+                        text = window.clipboardData.getData('Text');
+                    }
+                    if (document.queryCommandSupported('insertText')) {
+                        document.execCommand('insertText', false, text);
+                    } else {
+                        document.execCommand('paste', false, text);
+                    }
+                });
+                $('[contenteditable]').on('keydown', function(event) {
+                    console.log(event.keyCode);
+                    console.log("check onCheckKey", wq)
+                    var id = "#check_"+q;
+                    console.log("id", id)
+                    var el = $(id, window.parent.document);
+                    var getAnswerData = JSON.parse(sessionStorage.getItem("AnswerCheck"));
+                    if(el[0].innerHTML == "Unseen" || el[0].innerHTML == "Not Attempted") {
+                        getAnswerData.push(id);
+                        el[0].innerHTML="Attempted";
+                        el[0].style.color = "#595959";
+                        sessionStorage.setItem("AnswerCheck", JSON.stringify(getAnswerData));
+                    }
+                });
+              });
+            function setData(done) {
+                var frm = document.getElementById('noteform') || null;
+                console.log("Setting")
+                if(frm) {
+                    sessionStorage.setItem(done, frm.note.value)
+                }
+            }
+            function submitWord(){
+                const urlParams1 = new URLSearchParams(window.location.search);
+                const rscoid1 = urlParams1.get('rscoid');
+                const q1 = urlParams1.get('q');
+                const wq1 = "WordQ" + q1
+                console.log("q1", q1, "rscoid1", rscoid1, "wq1", wq1)
+                setData(wq1);
+                var frm = document.getElementById('noteform') || null;
+                console.log("teat check", frm)
+                sessionStorage.setItem("wordFrm", JSON.stringify(frm));
+                if(frm) {
+                    if(frm.note.value != "Write your answer here") {
+                        frm.action = "https://elearningpat.com/admin/patservices/service.php?q="+ q1 +"&scoid=" + rscoid1;
+                    } else {
+                        alert("word document is empty for submission");
+                        location.reload();
+                    }
+                }
+                frm.submit();
+            }
+        </script>
+    </body>
+</html>
